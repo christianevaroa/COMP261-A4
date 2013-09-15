@@ -148,13 +148,13 @@ class progNode implements Node {
 	}
 	@Override public String toString(){
 		return "A String"; // TODO: progNode tostring
-	}
-}
+	}}
 
 class stmtNode implements Node {
-
+	private Node child;
+	
 	@Override public void execute(Robot robot) {
-		// TODO: Auto-generated method stub
+		child.execute(robot);
 	}
 	@Override public String toString(){
 		return "A String"; // TODO: stmtNode toString
