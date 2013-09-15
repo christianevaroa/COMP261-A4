@@ -160,6 +160,25 @@ class stmtNode implements Node {
 		return "A String"; // TODO: stmtNode toString
 	}}
 
+class loopNode implements Node {
+	private blockNode block;
+	
+	@Override public void execute(Robot robot) {
+		block.execute(robot);
+	}
+	@Override public String toString(){
+		return "A String"; // TODO: loopNode toString
+	}}
+
+class blockNode implements Node {
+	private List<Node> children;
+	@Override public void execute(Robot robot) {
+		for(Node n : children){ n.execute(robot);}
+	}
+	@Override public String toString(){
+		return "A String"; // TODO: blockNode toString
+	}}
+
 // ACT nodes
 class turnLNode implements Node {
 	@Override public void execute(Robot robot) {
