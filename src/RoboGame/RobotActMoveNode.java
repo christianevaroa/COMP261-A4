@@ -6,5 +6,10 @@ public class RobotActMoveNode implements RobotActNode {
 	public void execute(Robot robot) {
 		robot.move();
 	}
+	
+	@Override
+	public String toString(){
+		return "move";
+	}
 
 }

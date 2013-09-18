@@ -7,4 +7,8 @@ public class RobotActShieldOffNode implements RobotActNode {
 		robot.setShield(false);
 	}
 
+	@Override
+	public String toString(){
+		return "shield off";
+	}
 }

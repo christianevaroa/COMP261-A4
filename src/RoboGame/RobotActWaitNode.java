@@ -7,4 +7,8 @@ public class RobotActWaitNode implements RobotActNode {
 		robot.idleWait();
 	}
 
+	@Override
+	public String toString(){
+		return "wait";
+	}
 }

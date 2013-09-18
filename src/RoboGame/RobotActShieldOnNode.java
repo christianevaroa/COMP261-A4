@@ -6,5 +6,10 @@ public class RobotActShieldOnNode implements RobotActNode {
 	public void execute(Robot robot) {
 		robot.setShield(true);
 	}
+	
+	@Override
+	public String toString(){
+		return "shield on";
+	}
 
 }

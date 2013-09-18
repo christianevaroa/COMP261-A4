@@ -7,4 +7,8 @@ public class RobotActTakeFuelNode implements RobotActNode {
 		robot.takeFuel();
 	}
 
+	@Override
+	public String toString(){
+		return "take fuel";
+	}
 }

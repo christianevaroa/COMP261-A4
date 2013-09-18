@@ -7,4 +7,8 @@ public class RobotActTurnANode implements RobotActNode {
 		robot.turnAround();
 	}
 
+	@Override
+	public String toString(){
+		return "turn around";
+	}
 }

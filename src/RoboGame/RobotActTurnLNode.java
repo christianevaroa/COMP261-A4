@@ -7,4 +7,8 @@ public class RobotActTurnLNode implements RobotActNode {
 		robot.turnLeft();
 	}
 
+	@Override
+	public String toString(){
+		return "turn left";
+	}
 }

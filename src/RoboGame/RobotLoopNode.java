@@ -12,5 +12,10 @@ public class RobotLoopNode implements RobotProgramNode {
 	public void execute(Robot robot) {
 		block.execute(robot);
 	}
+	
+	@Override
+	public String toString(){
+		return "loop "+block;
+	}
 
 }
