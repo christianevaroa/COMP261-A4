@@ -84,13 +84,47 @@ public class Parser {
 	 */
 	static RobotProgramNode parseProgram(Scanner s){
 		//THE PARSER GOES HERE!
+		List<RobotProgramNode> nodes = new ArrayList<RobotProgramNode>();
+
+		do{
+			RobotProgramNode node = parseStmt(s);
+		}while(nodes == null);
 
 		return null;     // just so it will compile!!
 	}
 
+	private static RobotProgramNode parseStmt(Scanner s) {
+		if(s.hasNext("loop")){
+			return parseLoop(s);
+		}else if(s.hasNext("move")){
+			//TODO parse move node
+		}else if(s.hasNext("turnL")){
+			//TODO parse turnL node
+		}else if(s.hasNext("turnR")){
+			//TODO parse turnR node
+		}else if(s.hasNext("takeFuel")){
+			//TODO parse takeFuel node
+		}else if(s.hasNext("wait")){
+			//TODO parse wait node
+		}
+		fail("Expected loop or action", s);
+		return null;
+	}
 
+	private static RobotProgramNode parseLoop(Scanner s) {
+		if(!gobble("loop", s)){ fail("expected loop", s); }
+		return parseBlock(s);
+	}
 
-
+	private static RobotProgramNode parseBlock(Scanner s) {
+		if(!gobble(OPENBRACE, s)){ fail("expected {", s); }
+		RobotProgramNode node;
+		do{
+			node = parseStmt(s);
+		}while(!s.hasNext(CLOSEBRACE));
+		if(!gobble(CLOSEBRACE,s)){ fail("expected }", s); }
+		return node;
+	}
 
 
 
