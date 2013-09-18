@@ -4,6 +4,6 @@ package RoboGame;
  * including the top level program node
  */
 
-interface RobotProgramNode {
+ interface RobotProgramNode {
 	public void execute(Robot robot);
 }
