@@ -1,5 +1,10 @@
 package RoboGame;
 
+/**
+ * 
+ * @author Christian Evaroa
+ *
+ */
 public class RobotActShieldOffNode implements RobotActNode {
 
 	@Override

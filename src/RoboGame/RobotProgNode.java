@@ -1,7 +1,11 @@
 package RoboGame;
 
 import java.util.List;
-
+/**
+ * A node that stores a list of other nodes (the program) and executes them on order.
+ * @author Christian Evaroa
+ *
+ */
 public class RobotProgNode implements RobotProgramNode{
 
 	List<RobotProgramNode> children;

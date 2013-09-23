@@ -1,5 +1,10 @@
 package RoboGame;
 
+/**
+ * A statement node which contains an action, loop, if, while or assign node
+ * @author Christian Evaroa
+ *
+ */
 public class RobotStmtNode implements RobotProgramNode{
 
 	RobotProgramNode child;

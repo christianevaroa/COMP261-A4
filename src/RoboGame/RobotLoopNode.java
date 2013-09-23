@@ -1,5 +1,9 @@
 package RoboGame;
-
+/**
+ * A node that executes a block node in a loop
+ * @author Christian Evaroa
+ *
+ */
 public class RobotLoopNode implements RobotProgramNode {
 
 	private RobotProgramNode block;

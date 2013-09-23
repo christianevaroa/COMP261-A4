@@ -1,5 +1,9 @@
 package RoboGame;
-
+/**
+ * 
+ * @author Christian Evaroa
+ *
+ */
 public class RobotActTurnANode implements RobotActNode {
 
 	@Override
