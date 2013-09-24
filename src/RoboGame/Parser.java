@@ -118,6 +118,7 @@ public class Parser {
 		else if(s.hasNext("if")){
 			node = parseIfNode(s);
 		}
+		fail("im dumb", s);
 		return node;
 		
 		//fail("Expected loop or action", s);
