@@ -5,6 +5,6 @@ package RoboGame;
  * @author Christian Evaroa
  *
  */
-public interface RobotConditionNode extends RobotProgramNode {
+public interface RobotConditionNode {
 	public boolean evaluate(Robot robot);
 }

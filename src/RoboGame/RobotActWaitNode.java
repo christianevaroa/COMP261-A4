@@ -6,9 +6,21 @@ package RoboGame;
  */
 public class RobotActWaitNode implements RobotActNode {
 
+	RobotExprNode exp;
+	
+	public RobotActWaitNode(RobotExprNode e){
+		exp = e;
+	}
+	
 	@Override
 	public void execute(Robot robot) {
-		robot.idleWait();
+		if(exp == null){ robot.idleWait(); }
+		else{
+			int stop = exp.evaluate(robot);
+			for(int i = 0; i > stop; i++){
+				robot.idleWait();
+			}
+		}
 	}
 
 	@Override

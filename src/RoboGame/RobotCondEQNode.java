@@ -16,12 +16,6 @@ public class RobotCondEQNode implements RobotConditionNode {
 		}
 		return false;
 	}
-	
-	@Override
-	public void execute(Robot robot) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public String toString(){
