@@ -102,33 +102,39 @@ public class Parser {
 		}else if(s.hasNext("move")){
 			node = parseMoveNode(s);
 			if(!gobble(";", s)){ fail("expected ; after move", s); }
+			return node;
 		}else if(s.hasNext("turnL")){
 			node = parseTurnLNode(s);
 			if(!gobble(";", s)){ fail("expected ; after turnL", s); }
+			return node;
 		}else if(s.hasNext("turnR")){
 			node = parseTurnRNode(s);
 			if(!gobble(";", s)){ fail("expected ; after turnR", s); }
+			return node;
 		}else if(s.hasNext("takeFuel")){
 			node = parseTakeFuelNode(s);
 			if(!gobble(";", s)){ fail("expected ; after takeFuel", s); }
+			return node;
 		}else if(s.hasNext("wait")){
 			node = parseWaitNode(s);
 			if(!gobble(";", s)){ fail("expected ; after wait", s); }
+			return node;
 		}
 		else if(s.hasNext("if")){
 			node = parseIfNode(s);
+			return node;
 		}
-		fail("im dumb", s);
+		else if(s.hasNext("while")){
+			node = parseWhileNode(s);
+		}
+		fail("im dumb", s); //TODO fix this
 		return node;
-		
-		//fail("Expected loop or action", s);
-		//return null;
 	}
 
 	/*
-	 * Parsing If nodes
+	 * Parsing If, While nodes
 	 */
-	
+
 	private static RobotProgramNode parseIfNode(Scanner s) {
 		//TODO extend for later parts
 		if(!gobble("if", s)){ fail("expected if", s); }
@@ -138,6 +144,12 @@ public class Parser {
 		RobotProgramNode block = parseBlock(s);
 		RobotIfNode n = new RobotIfNode(cond, block);
 		return n;
+	}
+	
+	private static RobotProgramNode parseWhileNode(Scanner s) {
+		if(!gobble("while", s)){ fail("expected while", s); }
+		//TODO: HERE **************************************************************************************************************
+		return null;
 	}
 
 	/*
@@ -149,6 +161,7 @@ public class Parser {
 		if(s.hasNext("lt")){ n = parseLT(s); }
 		else if(s.hasNext("gt")){ n = parseGT(s); }
 		else if(s.hasNext("eq")){ n = parseEQ(s); }
+		fail("expected a valid COND", s);
 		return null;
 	}
 
@@ -193,7 +206,6 @@ public class Parser {
 	 */
 
 	private static RobotSensorNode parseSensor(Scanner s) {
-		RobotSensorNode n = null;
 		if(s.hasNext("fuelLeft")){ return new RobotSensFuelLeftNode(); }
 		else if(s.hasNext("oppLR")){ return new RobotSensOppLRNode(); }
 		else if(s.hasNext("oppFB")){ return new RobotSensOppFBNode(); }
@@ -201,7 +213,8 @@ public class Parser {
 		else if(s.hasNext("barrelLR")){ return new RobotSensBarrelLRNode(); }
 		else if(s.hasNext("barrelFB")){ return new RobotSensBarrelFBNode(); }
 		else if(s.hasNext("wallDist")){ return new RobotSensWallDistNode(); }
-		return n;
+		fail("expected a valid SEN", s);
+		return null;
 	}
 	
 	/*
