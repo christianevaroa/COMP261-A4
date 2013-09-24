@@ -356,18 +356,33 @@ public class Parser {
 	}
 	
 	private static RobotOperatorNode parseSubNode(Scanner s) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!gobble("sub",s)){ fail("expected sub",s); }
+		if(!gobble(OPENPAREN,s)){ fail("expected ( before parameters",s); }
+		RobotExprNode lhs = parseExprNode(s);
+		if(!gobble(",",s)){ fail("expected , between parameters",s); }
+		RobotExprNode rhs = parseExprNode(s);
+		if(!gobble(CLOSEPAREN,s)){ fail("expected ) after parameters",s); }
+		return new RobotOpSubNode(lhs, rhs);
 	}
 	
 	private static RobotOperatorNode parseMulNode(Scanner s) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!gobble("mul",s)){ fail("expected mul",s); }
+		if(!gobble(OPENPAREN,s)){ fail("expected ( before parameters",s); }
+		RobotExprNode lhs = parseExprNode(s);
+		if(!gobble(",",s)){ fail("expected , between parameters",s); }
+		RobotExprNode rhs = parseExprNode(s);
+		if(!gobble(CLOSEPAREN,s)){ fail("expected ) after parameters",s); }
+		return new RobotOpMulNode(lhs, rhs);
 	}
 	
 	private static RobotOperatorNode parseDivNode(Scanner s) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!gobble("div",s)){ fail("expected div",s); }
+		if(!gobble(OPENPAREN,s)){ fail("expected ( before parameters",s); }
+		RobotExprNode lhs = parseExprNode(s);
+		if(!gobble(",",s)){ fail("expected , between parameters",s); }
+		RobotExprNode rhs = parseExprNode(s);
+		if(!gobble(CLOSEPAREN,s)){ fail("expected ) after parameters",s); }
+		return new RobotOpDivNode(lhs, rhs);
 	}
 
 	/*
