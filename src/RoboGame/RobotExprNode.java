@@ -5,6 +5,6 @@ package RoboGame;
  * @author Christian Evaroa
  *
  */
-public interface RobotValueNode extends RobotProgramNode {
-	public int evaluate();
+public interface RobotExprNode extends RobotProgramNode {
+	public int evaluate(Robot robot);
 }

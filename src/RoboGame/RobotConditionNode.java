@@ -6,5 +6,5 @@ package RoboGame;
  *
  */
 public interface RobotConditionNode extends RobotProgramNode {
-	public boolean evaluate();
+	public boolean evaluate(Robot robot);
 }

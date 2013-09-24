@@ -4,4 +4,4 @@ package RoboGame;
  * @author Christian Evaroa
  *
  */
-public interface RobotSensorNode extends RobotValueNode {}
+public interface RobotSensorNode extends RobotExprNode {}

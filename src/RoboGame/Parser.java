@@ -101,19 +101,52 @@ public class Parser {
 			return parseLoop(s);
 		}else if(s.hasNext("move")){
 			node = parseMoveNode(s);
+			if(!gobble(";", s)){ fail("expected ; after move", s); }
 		}else if(s.hasNext("turnL")){
 			node = parseTurnLNode(s);
+			if(!gobble(";", s)){ fail("expected ; after turnL", s); }
 		}else if(s.hasNext("turnR")){
 			node = parseTurnRNode(s);
+			if(!gobble(";", s)){ fail("expected ; after turnR", s); }
 		}else if(s.hasNext("takeFuel")){
 			node = parseTakeFuelNode(s);
+			if(!gobble(";", s)){ fail("expected ; after takeFuel", s); }
 		}else if(s.hasNext("wait")){
 			node = parseWaitNode(s);
+			if(!gobble(";", s)){ fail("expected ; after wait", s); }
 		}
-		if(!gobble(";", s)){ fail("expected ; after an action", s); }
+		else if(s.hasNext("if")){
+			node = parseIfNode(s);
+		}
 		return node;
+		
 		//fail("Expected loop or action", s);
 		//return null;
+	}
+
+	private static RobotProgramNode parseIfNode(Scanner s) {
+		//TODO extend for later parts
+		if(!gobble("if", s)){ fail("expected if", s); }
+		if(!gobble(OPENPAREN, s)){ fail("expected ( after if", s); }
+		RobotProgramNode cond = parseCondition(s);
+		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after if statement's condition", s); }
+		RobotProgramNode block = parseBlock(s);
+		RobotIfNode n = new RobotIfNode(cond, block);
+		return n;
+	}
+
+	private static RobotProgramNode parseCondition(Scanner s) {
+		RobotProgramNode n = null;
+		if(s.hasNext("lt")){ n = parseLT(s); }
+		else if(s.hasNext("gt")){ n = parseGT(s); }
+		else if(s.hasNext("eq")){ n = parseEQ(s); }
+		return null;
+	}
+
+	private static RobotProgramNode parseLT(Scanner s) {
+		if(!gobble("lt", s)){ fail("expected lt", s); }
+		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
+		
 	}
 
 	private static RobotProgramNode parseLoop(Scanner s) {
