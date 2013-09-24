@@ -127,23 +127,31 @@ public class Parser {
 
 	private static RobotProgramNode parseIfNode(Scanner s) {
 		//TODO extend for later parts
-		//ArrayList<RobotConditionNode> conditions = new ArrayList<RobotConditionNode>();
-		//ArrayList<RobotProgramNode> blocks = new ArrayList<RobotProgramNode>();
+		ArrayList<RobotConditionNode> conditions = new ArrayList<RobotConditionNode>();
+		ArrayList<RobotProgramNode> blocks = new ArrayList<RobotProgramNode>();
 
 		if(!gobble("if", s)){ fail("expected if", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( after if", s); }
-		//conditions.add(parseCondition(s));
-		RobotConditionNode condition = parseCondition(s);
+		conditions.add(parseCondition(s));
+		//RobotConditionNode condition = parseCondition(s);
 		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after if statement's condition", s); }
-		//blocks.add(parseBlock(s));
-		RobotProgramNode block = parseBlock(s);
+		blocks.add(parseBlock(s));
+		//RobotProgramNode block = parseBlock(s);
 
+		while(s.hasNext("elif")){
+			if(!gobble("elif", s)){ fail("expected elif", s); }
+			if(!gobble(OPENPAREN, s)){ fail("expected ( after elif", s); }
+			conditions.add(parseCondition(s));
+			if(!gobble(CLOSEPAREN, s)){ fail("expected ) after elif's condition", s); }
+			blocks.add(parseBlock(s));
+		}
+		
 		RobotProgramNode elseNode = new RobotNullNode();
 		if(s.hasNext("else")){
 			elseNode = parseElse(s);
 		}
 
-		RobotIfNode n = new RobotIfNode(condition, block, elseNode);
+		RobotIfNode n = new RobotIfNode(conditions, blocks, elseNode);
 		return n;
 	}
 

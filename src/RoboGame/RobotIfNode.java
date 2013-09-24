@@ -10,28 +10,29 @@ import java.util.List;
  */
 public class RobotIfNode implements RobotProgramNode{
 
-	//private List<RobotConditionNode> conditions;
-	//private List<RobotProgramNode> blocks;
-	private RobotConditionNode condition;
-	private RobotProgramNode block;
+	private List<RobotConditionNode> conditions;
+	private List<RobotProgramNode> blocks;
+	//private RobotConditionNode condition;
+	//private RobotProgramNode block;
 	private RobotProgramNode elseNode;
 	//TODO: clean all this crap up before submitting
-	//public RobotIfNode(List<RobotConditionNode> c, List<RobotProgramNode> bl){
-	//	conditions = c;
-	//	blocks = bl;
-	//}
-
-	public RobotIfNode(RobotConditionNode c, RobotProgramNode b, RobotProgramNode e){
-		condition = c;
-		block = b;
+	public RobotIfNode(List<RobotConditionNode> c, List<RobotProgramNode> bl, RobotProgramNode e){
+		conditions = c;
+		blocks = bl;
 		elseNode = e;
 	}
+
+	//public RobotIfNode(RobotConditionNode c, RobotProgramNode b, RobotProgramNode e){
+	//	condition = c;
+	//	block = b;
+	//	elseNode = e;
+	//}
 
 	@Override
 	public void execute(Robot robot) {
 		if(condition.evaluate(robot)){
 			block.execute(robot);
-		} else {
+		} else { //TODO THIIIIIIIIIIIIIIIIIIIS
 			if(!(elseNode instanceof RobotNullNode))
 				elseNode.execute(robot);
 		}
