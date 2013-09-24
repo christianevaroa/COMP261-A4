@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class RobotIfNode implements RobotProgramNode{
 
-	//private List<RobotBlockNode> blocks;
 	//private List<RobotConditionNode> conditions;
-	private RobotProgramNode block;
+	//private List<RobotBlockNode> blocks;
 	private RobotProgramNode condition;
+	private RobotProgramNode block;
 	
 	//public RobotIfNode(List<RobotConditionNode> b, List<RobotBlockNode> bl){
 	//	conditions = b;

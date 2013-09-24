@@ -89,9 +89,9 @@ public class Parser {
 		do{
 			nodes.add(parseStmt(s));
 		}while(s.hasNext());
-		
+
 		RobotProgramNode program = new RobotProgNode(nodes);
-		
+
 		return program;
 	}
 
@@ -126,6 +126,7 @@ public class Parser {
 		}
 		else if(s.hasNext("while")){
 			node = parseWhileNode(s);
+			return node;
 		}
 		fail("im dumb", s); //TODO fix this
 		return node;
@@ -145,22 +146,24 @@ public class Parser {
 		RobotIfNode n = new RobotIfNode(cond, block);
 		return n;
 	}
-	
+
 	private static RobotProgramNode parseWhileNode(Scanner s) {
 		if(!gobble("while", s)){ fail("expected while", s); }
-		//TODO: HERE **************************************************************************************************************
-		return null;
+		if(!gobble(OPENPAREN, s)){ fail("expected ( atfer while", s); }
+		RobotConditionNode c = (RobotConditionNode) parseCondition(s);
+		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after condition", s); }
+		RobotBlockNode b = (RobotBlockNode) parseBlock(s);
+		return new RobotWhileNode(c, b);
 	}
 
 	/*
 	 * Parsing Condition nodes
 	 */
-	
+
 	private static RobotProgramNode parseCondition(Scanner s) {
-		RobotProgramNode n = null;
-		if(s.hasNext("lt")){ n = parseLT(s); }
-		else if(s.hasNext("gt")){ n = parseGT(s); }
-		else if(s.hasNext("eq")){ n = parseEQ(s); }
+		if(s.hasNext("lt")){ return parseLT(s); }
+		else if(s.hasNext("gt")){ return parseGT(s); }
+		else if(s.hasNext("eq")){ return parseEQ(s); }
 		fail("expected a valid COND", s);
 		return null;
 	}
@@ -171,52 +174,79 @@ public class Parser {
 		RobotSensorNode lhs = parseSensor(s);
 		if(!gobble(",", s)){ fail("expected , between parameters", s); }
 		RobotNumNode rhs = parseNum(s);
+		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after parameters", s); }
 		return new RobotCondLTNode(lhs, rhs);
 	}
-	
+
 	private static RobotProgramNode parseGT(Scanner s) {
 		if(!gobble("gt", s)){ fail("expected gt", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
 		RobotSensorNode lhs = parseSensor(s);
 		if(!gobble(",", s)){ fail("expected , between parameters", s); }
 		RobotNumNode rhs = parseNum(s);
+		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after parameters", s); }
 		return new RobotCondGTNode(lhs, rhs);
 	}
-	
+
 	private static RobotProgramNode parseEQ(Scanner s) {
 		if(!gobble("eq", s)){ fail("expected eq", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
 		RobotSensorNode lhs = parseSensor(s);
 		if(!gobble(",", s)){ fail("expected , between parameters", s); }
 		RobotNumNode rhs = parseNum(s);
+		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after parameters", s); }
 		return new RobotCondEQNode(lhs, rhs);
 	}
-	
+
 	/*
 	 * Parsing Expression nodes
 	 */
 
 	private static RobotNumNode parseNum(Scanner s) {
-		// TODO Auto-generated method stub
+		if(s.hasNext(NUMPAT)){
+			return new RobotNumNode(s.nextInt());
+		}
+		fail("expected numbers when parsing NumNode", s);
 		return null;
 	}
-	
+
 	/*
 	 * Parsing Sensor nodes
 	 */
 
 	private static RobotSensorNode parseSensor(Scanner s) {
-		if(s.hasNext("fuelLeft")){ return new RobotSensFuelLeftNode(); }
-		else if(s.hasNext("oppLR")){ return new RobotSensOppLRNode(); }
-		else if(s.hasNext("oppFB")){ return new RobotSensOppFBNode(); }
-		else if(s.hasNext("numBarrels")){ return new RobotSensNumBarrelsNode(); }
-		else if(s.hasNext("barrelLR")){ return new RobotSensBarrelLRNode(); }
-		else if(s.hasNext("barrelFB")){ return new RobotSensBarrelFBNode(); }
-		else if(s.hasNext("wallDist")){ return new RobotSensWallDistNode(); }
+		if(s.hasNext("fuelLeft")){ 
+			if(!gobble("fuelLeft", s)){ fail("expected fuelLeft", s); }
+			return new RobotSensFuelLeftNode(); 
+		}
+		else if(s.hasNext("oppLR")){ 
+			if(!gobble("oppLR", s)){ fail("expected oppLR", s); }
+			return new RobotSensOppLRNode(); 
+		}
+		else if(s.hasNext("oppFB")){ 
+			if(!gobble("oppFB", s)){ fail("expected oppFB", s); }
+			return new RobotSensOppFBNode(); 
+		}
+		else if(s.hasNext("numBarrels")){ 
+			if(!gobble("numBarrels", s)){ fail("expected numBarrels", s); }
+			return new RobotSensNumBarrelsNode(); 
+		}
+		else if(s.hasNext("barrelLR")){ 
+			if(!gobble("barrelLR", s)){ fail("expected barrelLR", s); }
+			return new RobotSensBarrelLRNode(); 
+		}
+		else if(s.hasNext("barrelFB")){
+			if(!gobble("barrelFB", s)){ fail("expected barrelFB", s); }
+			return new RobotSensBarrelFBNode(); 
+		}
+		else if(s.hasNext("wallDist")){ 
+			if(!gobble("wallDist", s)){ fail("expected wallDist", s); }
+			return new RobotSensWallDistNode(); 
+		}
 		fail("expected a valid SEN", s);
 		return null;
 	}
-	
+
 	/*
 	 * Parsing loops and blocks
 	 */
@@ -235,31 +265,31 @@ public class Parser {
 		if(!gobble(CLOSEBRACE,s)){ fail("expected }", s); }
 		return new RobotBlockNode(nodes);
 	}
-	
+
 	/*
 	 * Parsing Action nodes
 	 */
-	
+
 	private static RobotProgramNode parseMoveNode(Scanner s){
 		if(!gobble("move", s)){ fail("expected move", s); }
 		return new RobotActMoveNode();
 	}
-	
+
 	private static RobotProgramNode parseTurnLNode(Scanner s) {
 		if(!gobble("turnL", s)){ fail("expected turnL", s); }
 		return new RobotActTurnLNode();
 	}
-	
+
 	private static RobotProgramNode parseTurnRNode(Scanner s) {
 		if(!gobble("turnR", s)){ fail("expected turnR", s); }
 		return new RobotActTurnRNode();
 	}
-	
+
 	private static RobotProgramNode parseTakeFuelNode(Scanner s) {
 		if(!gobble("takeFuel", s)){ fail("expected takeFuel", s); }
 		return new RobotActTakeFuelNode();
 	}
-	
+
 	private static RobotProgramNode parseWaitNode(Scanner s) {
 		if(!gobble("wait", s)){ fail("expected wait", s); }
 		return new RobotActWaitNode();
