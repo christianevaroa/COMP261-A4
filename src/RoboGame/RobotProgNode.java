@@ -25,7 +25,7 @@ public class RobotProgNode implements RobotProgramNode{
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		for(RobotProgramNode n : children){
-			sb.append(n+", ");
+			sb.append(n);
 		}
 		return sb.toString();
 	}

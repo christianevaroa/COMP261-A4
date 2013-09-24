@@ -25,7 +25,6 @@ public class RobotCondEQNode implements RobotConditionNode {
 
 	@Override
 	public String toString(){
-		//TODO toString
-		return "";
+		return "eq ("+lhs+", "+rhs+")";
 	}
 }

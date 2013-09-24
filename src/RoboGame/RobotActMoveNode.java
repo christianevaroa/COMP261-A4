@@ -13,7 +13,7 @@ public class RobotActMoveNode implements RobotActNode {
 	
 	@Override
 	public String toString(){
-		return "move";
+		return "move;";
 	}
 
 }

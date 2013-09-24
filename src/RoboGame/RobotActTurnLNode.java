@@ -13,6 +13,6 @@ public class RobotActTurnLNode implements RobotActNode {
 
 	@Override
 	public String toString(){
-		return "turn left";
+		return "turn left;";
 	}
 }

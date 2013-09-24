@@ -13,6 +13,6 @@ public class RobotActTakeFuelNode implements RobotActNode {
 
 	@Override
 	public String toString(){
-		return "take fuel";
+		return "takeFuel;";
 	}
 }

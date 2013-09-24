@@ -26,7 +26,7 @@ public class RobotBlockNode implements RobotProgramNode {
 		StringBuilder sb = new StringBuilder();
 		sb.append("{ ");
 		for(RobotProgramNode n : commands){
-			sb.append(n+", ");
+			sb.append(n);
 		}
 		sb.append(" }");
 		return sb.toString();

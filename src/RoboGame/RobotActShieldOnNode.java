@@ -13,7 +13,7 @@ public class RobotActShieldOnNode implements RobotActNode {
 	
 	@Override
 	public String toString(){
-		return "shield on";
+		return "shieldOn;";
 	}
 
 }

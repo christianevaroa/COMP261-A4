@@ -25,7 +25,6 @@ public class RobotCondLTNode implements RobotConditionNode {
 
 	@Override
 	public String toString(){
-		//TODO toString
-		return "";
+		return "lt ("+lhs+", "+rhs+")";
 	}
 }

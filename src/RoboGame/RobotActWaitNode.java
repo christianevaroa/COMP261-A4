@@ -13,6 +13,6 @@ public class RobotActWaitNode implements RobotActNode {
 
 	@Override
 	public String toString(){
-		return "wait";
+		return "wait;";
 	}
 }
