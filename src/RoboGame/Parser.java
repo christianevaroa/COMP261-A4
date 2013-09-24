@@ -79,6 +79,13 @@ public class Parser {
 	private static Pattern CLOSEPAREN = Pattern.compile("\\)");
 	private static Pattern OPENBRACE = Pattern.compile("\\{");
 	private static Pattern CLOSEBRACE = Pattern.compile("\\}");
+	
+	// My patterns
+	
+	private static Pattern ACT = Pattern.compile("move|wait|turnAround|turnL|turnR|shieldOn|shieldOff|takeFuel");
+	private static Pattern COND = Pattern.compile("eq|gt|lt");
+	private static Pattern SENS = Pattern.compile("barrelFB|barrelLR|fuelLeft|numBarrels|oppFB|oppLR|wallDist");
+	private static Pattern OP = Pattern.compile("add|sub|mul|div");
 
 	/**    PROG  ::= STMT+
 	 */
@@ -96,7 +103,7 @@ public class Parser {
 	}
 
 	private static RobotProgramNode parseStmt(Scanner s) {
-		RobotProgramNode node = null;
+		RobotProgramNode node;
 		if(s.hasNext("loop")){
 			return parseLoop(s);
 		}else if(s.hasNext("if")){
@@ -106,10 +113,12 @@ public class Parser {
 		else if(s.hasNext("while")){
 			node = parseWhileNode(s);
 			return node;
-		}else{
+		}else if(s.hasNext(ACT)){
 			node = parseActNode(s);
 			return node;
 		}
+		fail("Didn't find a valid statement", s);
+		return null;
 	}
 
 	/*
@@ -234,9 +243,9 @@ public class Parser {
 	private static RobotProgramNode parseLT(Scanner s) {
 		if(!gobble("lt", s)){ fail("expected lt", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
-		RobotSensorNode lhs = parseSensor(s);
+		RobotExprNode lhs = parseSensor(s);
 		if(!gobble(",", s)){ fail("expected , between parameters", s); }
-		RobotNumNode rhs = parseNum(s);
+		RobotExprNode rhs = parseNum(s);
 		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after parameters", s); }
 		return new RobotCondLTNode(lhs, rhs);
 	}
@@ -244,9 +253,9 @@ public class Parser {
 	private static RobotProgramNode parseGT(Scanner s) {
 		if(!gobble("gt", s)){ fail("expected gt", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
-		RobotSensorNode lhs = parseSensor(s);
+		RobotExprNode lhs = parseSensor(s);
 		if(!gobble(",", s)){ fail("expected , between parameters", s); }
-		RobotNumNode rhs = parseNum(s);
+		RobotExprNode rhs = parseNum(s);
 		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after parameters", s); }
 		return new RobotCondGTNode(lhs, rhs);
 	}
@@ -254,9 +263,9 @@ public class Parser {
 	private static RobotProgramNode parseEQ(Scanner s) {
 		if(!gobble("eq", s)){ fail("expected eq", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
-		RobotSensorNode lhs = parseSensor(s);
+		RobotExprNode lhs = parseSensor(s);
 		if(!gobble(",", s)){ fail("expected , between parameters", s); }
-		RobotNumNode rhs = parseNum(s);
+		RobotExprNode rhs = parseNum(s);
 		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after parameters", s); }
 		return new RobotCondEQNode(lhs, rhs);
 	}
@@ -265,7 +274,15 @@ public class Parser {
 	 * Parsing Expression nodes
 	 */
 
-	private static RobotNumNode parseNum(Scanner s) {
+	private static RobotExprNode parseExprNode(Scanner s){
+		if(s.hasNext(OP)){ return parseOperatorNode(s); }
+		else if(s.hasNext(SENS)){ return parseSensor(s); }
+		else if(s.hasNext(NUMPAT)){ return parseNum(s); }
+		fail("expected valid Expression node (operator, sensor or number)", s);
+		return null;
+	}
+	
+	private static RobotExprNode parseNum(Scanner s) {
 		if(s.hasNext(NUMPAT)){
 			return new RobotNumNode(s.nextInt());
 		}
@@ -307,6 +324,49 @@ public class Parser {
 			return new RobotSensWallDistNode(); 
 		}
 		fail("expected a valid SEN", s);
+		return null;
+	}
+	
+	/*
+	 * Parsing Operator nodes
+	 */
+	
+	private static RobotOperatorNode parseOperatorNode(Scanner s){
+		if(s.hasNext("add")){
+			return parseAddNode(s);
+		}else if(s.hasNext("sub")){
+			return parseSubNode(s);
+		}else if(s.hasNext("mul")){
+			return parseMulNode(s);
+		}else if(s.hasNext("div")){
+			return parseDivNode(s);
+		}
+		fail("expected a valid Operator", s);
+		return null;
+	}
+
+	private static RobotOperatorNode parseAddNode(Scanner s) {
+		if(!gobble("add",s)){ fail("expected add",s); }
+		if(!gobble(OPENPAREN,s)){ fail("expected ( before parameters",s); }
+		RobotExprNode lhs = parseExprNode(s);
+		if(!gobble(",",s)){ fail("expected , between parameters",s); }
+		RobotExprNode rhs = parseExprNode(s);
+		if(!gobble(CLOSEPAREN,s)){ fail("expected ) after parameters",s); }
+		return new RobotOpAddNode(lhs, rhs);
+	}
+	
+	private static RobotOperatorNode parseSubNode(Scanner s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private static RobotOperatorNode parseMulNode(Scanner s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	private static RobotOperatorNode parseDivNode(Scanner s) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

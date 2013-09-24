@@ -1,10 +1,10 @@
 package RoboGame;
 
 public class RobotCondGTNode implements RobotConditionNode {
-	private RobotSensorNode lhs;
+	private RobotExprNode lhs;
 	private RobotExprNode rhs;
 	
-	public RobotCondGTNode(RobotSensorNode l, RobotExprNode r){
+	public RobotCondGTNode(RobotExprNode l, RobotExprNode r){
 		lhs = l;
 		rhs = r;
 	}
