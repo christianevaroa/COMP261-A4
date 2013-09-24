@@ -124,6 +124,10 @@ public class Parser {
 		//return null;
 	}
 
+	/*
+	 * Parsing If nodes
+	 */
+	
 	private static RobotProgramNode parseIfNode(Scanner s) {
 		//TODO extend for later parts
 		if(!gobble("if", s)){ fail("expected if", s); }
@@ -135,6 +139,10 @@ public class Parser {
 		return n;
 	}
 
+	/*
+	 * Parsing Condition nodes
+	 */
+	
 	private static RobotProgramNode parseCondition(Scanner s) {
 		RobotProgramNode n = null;
 		if(s.hasNext("lt")){ n = parseLT(s); }
@@ -146,8 +154,58 @@ public class Parser {
 	private static RobotProgramNode parseLT(Scanner s) {
 		if(!gobble("lt", s)){ fail("expected lt", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
-		
+		RobotSensorNode lhs = parseSensor(s);
+		if(!gobble(",", s)){ fail("expected , between parameters", s); }
+		RobotNumNode rhs = parseNum(s);
+		return new RobotCondLTNode(lhs, rhs);
 	}
+	
+	private static RobotProgramNode parseGT(Scanner s) {
+		if(!gobble("gt", s)){ fail("expected gt", s); }
+		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
+		RobotSensorNode lhs = parseSensor(s);
+		if(!gobble(",", s)){ fail("expected , between parameters", s); }
+		RobotNumNode rhs = parseNum(s);
+		return new RobotCondGTNode(lhs, rhs);
+	}
+	
+	private static RobotProgramNode parseEQ(Scanner s) {
+		if(!gobble("eq", s)){ fail("expected eq", s); }
+		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by parameters", s); }
+		RobotSensorNode lhs = parseSensor(s);
+		if(!gobble(",", s)){ fail("expected , between parameters", s); }
+		RobotNumNode rhs = parseNum(s);
+		return new RobotCondEQNode(lhs, rhs);
+	}
+	
+	/*
+	 * Parsing Expression nodes
+	 */
+
+	private static RobotNumNode parseNum(Scanner s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/*
+	 * Parsing Sensor nodes
+	 */
+
+	private static RobotSensorNode parseSensor(Scanner s) {
+		RobotSensorNode n = null;
+		if(s.hasNext("fuelLeft")){ return new RobotSensFuelLeftNode(); }
+		else if(s.hasNext("oppLR")){ return new RobotSensOppLRNode(); }
+		else if(s.hasNext("oppFB")){ return new RobotSensOppFBNode(); }
+		else if(s.hasNext("numBarrels")){ return new RobotSensNumBarrelsNode(); }
+		else if(s.hasNext("barrelLR")){ return new RobotSensBarrelLRNode(); }
+		else if(s.hasNext("barrelFB")){ return new RobotSensBarrelFBNode(); }
+		else if(s.hasNext("wallDist")){ return new RobotSensWallDistNode(); }
+		return n;
+	}
+	
+	/*
+	 * Parsing loops and blocks
+	 */
 
 	private static RobotProgramNode parseLoop(Scanner s) {
 		if(!gobble("loop", s)){ fail("expected loop", s); }
@@ -163,6 +221,10 @@ public class Parser {
 		if(!gobble(CLOSEBRACE,s)){ fail("expected }", s); }
 		return new RobotBlockNode(nodes);
 	}
+	
+	/*
+	 * Parsing Action nodes
+	 */
 	
 	private static RobotProgramNode parseMoveNode(Scanner s){
 		if(!gobble("move", s)){ fail("expected move", s); }
