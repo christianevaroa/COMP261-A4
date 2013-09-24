@@ -99,37 +99,17 @@ public class Parser {
 		RobotProgramNode node = null;
 		if(s.hasNext("loop")){
 			return parseLoop(s);
-		}else if(s.hasNext("move")){
-			node = parseMoveNode(s);
-			if(!gobble(";", s)){ fail("expected ; after move", s); }
-			return node;
-		}else if(s.hasNext("turnL")){
-			node = parseTurnLNode(s);
-			if(!gobble(";", s)){ fail("expected ; after turnL", s); }
-			return node;
-		}else if(s.hasNext("turnR")){
-			node = parseTurnRNode(s);
-			if(!gobble(";", s)){ fail("expected ; after turnR", s); }
-			return node;
-		}else if(s.hasNext("takeFuel")){
-			node = parseTakeFuelNode(s);
-			if(!gobble(";", s)){ fail("expected ; after takeFuel", s); }
-			return node;
-		}else if(s.hasNext("wait")){
-			node = parseWaitNode(s);
-			if(!gobble(";", s)){ fail("expected ; after wait", s); }
-			return node;
-		}
-		else if(s.hasNext("if")){
+		}else if(s.hasNext("if")){
 			node = parseIfNode(s);
 			return node;
 		}
 		else if(s.hasNext("while")){
 			node = parseWhileNode(s);
 			return node;
+		}else{
+			node = parseActNode(s);
+			return node;
 		}
-		fail("im dumb", s); //TODO fix this
-		return node;
 	}
 
 	/*
@@ -154,6 +134,89 @@ public class Parser {
 		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after condition", s); }
 		RobotBlockNode b = (RobotBlockNode) parseBlock(s);
 		return new RobotWhileNode(c, b);
+	}
+	
+	/*
+	 * Parsing Action nodes
+	 */
+	
+	private static RobotProgramNode parseActNode(Scanner s){
+		RobotProgramNode node;
+		if(s.hasNext("move")){
+			node = parseMoveNode(s);
+			if(!gobble(";", s)){ fail("expected ; after move", s); }
+			return node;
+		}else if(s.hasNext("turnL")){
+			node = parseTurnLNode(s);
+			if(!gobble(";", s)){ fail("expected ; after turnL", s); }
+			return node;
+		}else if(s.hasNext("turnR")){
+			node = parseTurnRNode(s);
+			if(!gobble(";", s)){ fail("expected ; after turnR", s); }
+			return node;
+		}else if(s.hasNext("takeFuel")){
+			node = parseTakeFuelNode(s);
+			if(!gobble(";", s)){ fail("expected ; after takeFuel", s); }
+			return node;
+		}else if(s.hasNext("wait")){
+			node = parseWaitNode(s);
+			if(!gobble(";", s)){ fail("expected ; after wait", s); }
+			return node;
+		}else if(s.hasNext("shieldOn")){
+			node = parseShieldOnNode(s);
+			if(!gobble(";", s)){ fail("expected ; after shieldOn", s); }
+			return node;
+		}else if(s.hasNext("shieldOff")){
+			node = parseShieldOffNode(s);
+			if(!gobble(";", s)){ fail("expected ; after shieldOff", s); }
+			return node;
+		}else if(s.hasNext("turnAround")){
+			node = parseTurnAroundNode(s);
+			if(!gobble(";", s)){ fail("expected ; after turnAround", s); }
+			return node;
+		}
+		fail("expected valid Act node", s);
+		return null;
+	}
+	
+	private static RobotProgramNode parseTurnAroundNode(Scanner s) {
+		if(!gobble("turnAround", s)){ fail("expected turnAround", s); }
+		return new RobotActTurnANode();
+	}
+
+	private static RobotProgramNode parseMoveNode(Scanner s){
+		if(!gobble("move", s)){ fail("expected move", s); }
+		return new RobotActMoveNode();
+	}
+
+	private static RobotProgramNode parseTurnLNode(Scanner s) {
+		if(!gobble("turnL", s)){ fail("expected turnL", s); }
+		return new RobotActTurnLNode();
+	}
+
+	private static RobotProgramNode parseTurnRNode(Scanner s) {
+		if(!gobble("turnR", s)){ fail("expected turnR", s); }
+		return new RobotActTurnRNode();
+	}
+
+	private static RobotProgramNode parseTakeFuelNode(Scanner s) {
+		if(!gobble("takeFuel", s)){ fail("expected takeFuel", s); }
+		return new RobotActTakeFuelNode();
+	}
+
+	private static RobotProgramNode parseWaitNode(Scanner s) {
+		if(!gobble("wait", s)){ fail("expected wait", s); }
+		return new RobotActWaitNode();
+	}
+	
+	private static RobotProgramNode parseShieldOnNode(Scanner s){
+		if(!gobble("shieldOn", s)){ fail("expected shieldOn", s); }
+		return new RobotActShieldOnNode();
+	}
+	
+	private static RobotProgramNode parseShieldOffNode(Scanner s){
+		if(!gobble("shieldOff", s)){ fail("expected shieldOff", s); }
+		return new RobotActShieldOffNode();
 	}
 
 	/*
@@ -266,34 +329,6 @@ public class Parser {
 		return new RobotBlockNode(nodes);
 	}
 
-	/*
-	 * Parsing Action nodes
-	 */
-
-	private static RobotProgramNode parseMoveNode(Scanner s){
-		if(!gobble("move", s)){ fail("expected move", s); }
-		return new RobotActMoveNode();
-	}
-
-	private static RobotProgramNode parseTurnLNode(Scanner s) {
-		if(!gobble("turnL", s)){ fail("expected turnL", s); }
-		return new RobotActTurnLNode();
-	}
-
-	private static RobotProgramNode parseTurnRNode(Scanner s) {
-		if(!gobble("turnR", s)){ fail("expected turnR", s); }
-		return new RobotActTurnRNode();
-	}
-
-	private static RobotProgramNode parseTakeFuelNode(Scanner s) {
-		if(!gobble("takeFuel", s)){ fail("expected takeFuel", s); }
-		return new RobotActTakeFuelNode();
-	}
-
-	private static RobotProgramNode parseWaitNode(Scanner s) {
-		if(!gobble("wait", s)){ fail("expected wait", s); }
-		return new RobotActWaitNode();
-	}
 
 
 
