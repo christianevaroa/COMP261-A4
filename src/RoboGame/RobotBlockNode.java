@@ -11,7 +11,7 @@ public class RobotBlockNode implements RobotProgramNode {
 	List<RobotProgramNode> commands;
 	
 	public RobotBlockNode(List<RobotProgramNode> l){
-		commands = l;
+		commands = l; //TODO: ensure l isn't empty (in Parser)
 	}
 	
 	@Override
