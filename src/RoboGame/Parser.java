@@ -86,6 +86,7 @@ public class Parser {
 	private static Pattern COND = Pattern.compile("eq|gt|lt|and|or|not");
 	private static Pattern SENS = Pattern.compile("barrelFB|barrelLR|fuelLeft|numBarrels|oppFB|oppLR|wallDist");
 	private static Pattern OP = Pattern.compile("add|sub|mul|div");
+	private static Pattern ELSE = Pattern.compile("else|elif");
 
 	/**    PROG  ::= STMT+
 	 */
@@ -133,10 +134,8 @@ public class Parser {
 		if(!gobble("if", s)){ fail("expected if", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( after if", s); }
 		conditions.add(parseCondition(s));
-		//RobotConditionNode condition = parseCondition(s);
 		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after if statement's condition", s); }
 		blocks.add(parseBlock(s));
-		//RobotProgramNode block = parseBlock(s);
 
 		while(s.hasNext("elif")){
 			if(!gobble("elif", s)){ fail("expected elif", s); }
