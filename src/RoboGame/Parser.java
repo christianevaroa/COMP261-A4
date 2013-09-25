@@ -378,12 +378,10 @@ public class Parser {
 			return new RobotSensNumBarrelsNode(); 
 		}
 		else if(s.hasNext("barrelLR")){ 
-			if(!gobble("barrelLR", s)){ fail("expected barrelLR", s); }
-			return new RobotSensBarrelLRNode(); 
+			return parseSensBarrelLRNode(s); 
 		}
 		else if(s.hasNext("barrelFB")){
-			if(!gobble("barrelFB", s)){ fail("expected barrelFB", s); }
-			return new RobotSensBarrelFBNode(); 
+			return parseSensBarrelFBNode(s); 
 		}
 		else if(s.hasNext("wallDist")){ 
 			if(!gobble("wallDist", s)){ fail("expected wallDist", s); }
@@ -393,6 +391,28 @@ public class Parser {
 		return null;
 	}
 
+	private static RobotSensorNode parseSensBarrelLRNode(Scanner s) {
+		if(!gobble("barrelLR", s)){ fail("expected barrelLR", s); }
+		RobotExprNode n = new RobotNumNode(0);
+		if(s.hasNext(OPENPAREN)){
+			if(!gobble(OPENPAREN, s)){ fail("expected ( before barrelLR parameters", s); }
+			n = parseExprNode(s);
+			if(!gobble(CLOSEPAREN, s)){ fail("expected ) after barrelLR parameters", s); }
+		}
+		return new RobotSensBarrelLRNode(n);
+	}
+	
+	private static RobotSensorNode parseSensBarrelFBNode(Scanner s) {
+		if(!gobble("barrelFB", s)){ fail("expected barrelFB", s); }
+		RobotExprNode n = new RobotNumNode(0);
+		if(s.hasNext(OPENPAREN)){
+			if(!gobble(OPENPAREN, s)){ fail("expected ( before barrelFB parameters", s); }
+			n = parseExprNode(s);
+			if(!gobble(CLOSEPAREN, s)){ fail("expected ) after barrelFB parameters", s); }
+		}
+		return new RobotSensBarrelFBNode(n);
+	}
+	
 	/*
 	 * Parsing Operator nodes
 	 */

@@ -14,11 +14,6 @@ public class RobotOpAddNode implements RobotOperatorNode {
 	public int evaluate(Robot robot) {
 		return lhs.evaluate(robot) + rhs.evaluate(robot);
 	}
-
-	@Override
-	public void execute(Robot robot) {
-		
-	}
 	
 	@Override
 	public String toString(){

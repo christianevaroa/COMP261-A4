@@ -6,20 +6,15 @@ package RoboGame;
  */
 public class RobotSensBarrelLRNode implements RobotSensorNode {
 	
-	//private RobotExprNode exp;
+	private RobotExprNode exp;
 	
-	public RobotSensBarrelLRNode(){}
+	public RobotSensBarrelLRNode(RobotExprNode e){
+		exp = e;
+	}
 	
 	@Override
 	public int evaluate(Robot robot) {
-		//int v = exp.evaluate(robot);
-		return robot.getClosestBarrelLR();
-	}
-
-	@Override
-	public void execute(Robot robot) {
-		// TODO Auto-generated method stub
-		
+		return robot.getBarrelLR(exp.evaluate(robot));
 	}
 
 	@Override

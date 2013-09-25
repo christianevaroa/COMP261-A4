@@ -14,11 +14,6 @@ public class RobotOpDivNode implements RobotOperatorNode {
 	public int evaluate(Robot robot) {
 		return Math.round(lhs.evaluate(robot) / rhs.evaluate(robot));
 	}
-
-	@Override
-	public void execute(Robot robot) {
-		
-	}
 	
 	@Override
 	public String toString(){

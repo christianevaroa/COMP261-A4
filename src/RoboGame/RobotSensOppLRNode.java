@@ -12,12 +12,6 @@ public class RobotSensOppLRNode implements RobotSensorNode{
 	}
 
 	@Override
-	public void execute(Robot robot) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public String toString(){
 		return "oppLR";
 	}

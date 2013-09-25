@@ -12,12 +12,6 @@ public class RobotNumNode implements RobotExprNode {
 	public int evaluate(Robot robot) {
 		return value;
 	}
-	
-	@Override
-	public void execute(Robot robot) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public String toString(){

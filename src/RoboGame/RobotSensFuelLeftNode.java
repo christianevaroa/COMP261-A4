@@ -12,11 +12,6 @@ public class RobotSensFuelLeftNode implements RobotSensorNode{
 	}
 
 	@Override
-	public void execute(Robot robot) {
-		// TODO WHAT I DO??
-	}
-
-	@Override
 	public String toString(){
 		return "fuelLeft";
 	}
