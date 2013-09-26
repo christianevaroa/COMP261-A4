@@ -19,6 +19,6 @@ public class RobotCondGTNode implements RobotConditionNode {
 	
 	@Override
 	public String toString(){
-		return "gt ("+lhs+", "+rhs+")";
+		return "gt("+lhs+", "+rhs+")";
 	}
 }

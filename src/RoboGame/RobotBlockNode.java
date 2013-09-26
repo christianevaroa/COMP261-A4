@@ -11,7 +11,7 @@ public class RobotBlockNode implements RobotProgramNode {
 	List<RobotProgramNode> commands;
 	
 	public RobotBlockNode(List<RobotProgramNode> l){
-		commands = l; //TODO: ensure l isn't empty (in Parser)
+		commands = l;
 	}
 	
 	@Override
@@ -28,7 +28,7 @@ public class RobotBlockNode implements RobotProgramNode {
 		for(RobotProgramNode n : commands){
 			sb.append(n);
 		}
-		sb.append(" }");
+		sb.append(" } ");
 		return sb.toString();
 	}
 }

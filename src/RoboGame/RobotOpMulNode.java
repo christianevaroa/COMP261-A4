@@ -17,7 +17,7 @@ public class RobotOpMulNode implements RobotOperatorNode {
 	
 	@Override
 	public String toString(){
-		return "mul ("+lhs+", "+rhs+")";
+		return "mul("+lhs+", "+rhs+")";
 	}
 	
 }

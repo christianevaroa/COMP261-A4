@@ -127,7 +127,6 @@ public class Parser {
 	 */
 
 	private static RobotProgramNode parseIfNode(Scanner s) {
-		//TODO extend for later parts
 		ArrayList<RobotConditionNode> conditions = new ArrayList<RobotConditionNode>();
 		ArrayList<RobotProgramNode> blocks = new ArrayList<RobotProgramNode>();
 
@@ -331,9 +330,9 @@ public class Parser {
 	private static RobotConditionNode parseNot(Scanner s) {
 		if(!gobble("not", s)){ fail("expected or", s); }
 		if(!gobble(OPENPAREN, s)){ fail("expected ( followed by one parameter", s); }
-		RobotConditionNode c = parseCondition(s);
+		RobotConditionNode node = parseCondition(s);
 		if(!gobble(CLOSEPAREN, s)){ fail("expected ) after parameter", s); }
-		return new RobotCondNotNode(c);
+		return new RobotCondNotNode(node);
 	}
 
 	/*

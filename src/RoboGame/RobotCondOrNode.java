@@ -17,7 +17,7 @@ public class RobotCondOrNode implements RobotConditionNode {
 	
 	@Override
 	public String toString(){
-		return "or ("+lhs+", "+rhs+" )";
+		return "or("+lhs+", "+rhs+" )";
 	}
 
 }

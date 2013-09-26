@@ -19,6 +19,6 @@ public class RobotCondEQNode implements RobotConditionNode {
 
 	@Override
 	public String toString(){
-		return "eq ("+lhs+", "+rhs+")";
+		return "eq("+lhs+", "+rhs+")";
 	}
 }

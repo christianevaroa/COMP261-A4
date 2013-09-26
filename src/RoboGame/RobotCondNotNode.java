@@ -5,7 +5,7 @@ public class RobotCondNotNode implements RobotConditionNode {
 	private RobotConditionNode cond;
 	
 	public RobotCondNotNode(RobotConditionNode c){
-		c = cond;
+		cond = c;
 	}
 	
 	@Override
@@ -15,7 +15,7 @@ public class RobotCondNotNode implements RobotConditionNode {
 	
 	@Override
 	public String toString(){
-		return "not ("+cond+")";
+		return "not("+cond+")";
 	}
 
 }

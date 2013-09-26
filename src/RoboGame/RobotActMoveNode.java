@@ -25,6 +25,9 @@ public class RobotActMoveNode implements RobotActNode {
 
 	@Override
 	public String toString(){
+		if( exp != null){
+			return "move("+exp+");";
+		}
 		return "move;";
 	}
 

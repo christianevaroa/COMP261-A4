@@ -10,7 +10,7 @@ public class RobotStmtNode implements RobotProgramNode{
 	RobotProgramNode child;
 	
 	public RobotStmtNode(RobotProgramNode node){
-		child = node; //TODO in parser: ensure node is ACT or LOOP node
+		child = node;
 	}
 	
 	@Override
@@ -18,4 +18,8 @@ public class RobotStmtNode implements RobotProgramNode{
 		child.execute(robot);
 	}
 
+	@Override
+	public String toString(){
+		return child.toString();
+	}
 }

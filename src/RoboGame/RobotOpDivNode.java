@@ -17,7 +17,7 @@ public class RobotOpDivNode implements RobotOperatorNode {
 	
 	@Override
 	public String toString(){
-		return "div ("+lhs+", "+rhs+")";
+		return "div("+lhs+", "+rhs+")";
 	}
 
 }

@@ -17,7 +17,7 @@ public class RobotOpSubNode implements RobotOperatorNode {
 	
 	@Override
 	public String toString(){
-		return "sub ("+lhs+", "+rhs+")";
+		return "sub("+lhs+", "+rhs+")";
 	}
 
 }

@@ -17,7 +17,7 @@ public class RobotOpAddNode implements RobotOperatorNode {
 	
 	@Override
 	public String toString(){
-		return "add ("+lhs+", "+rhs+")";
+		return "add("+lhs+", "+rhs+")";
 	}
 
 }

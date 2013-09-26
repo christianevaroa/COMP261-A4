@@ -19,7 +19,7 @@ public class RobotWhileNode implements RobotProgramNode {
 	
 	@Override
 	public String toString(){
-		return "while ("+condition.toString()+")" +block;
+		return "while("+condition.toString()+")" +block;
 	}
 
 }

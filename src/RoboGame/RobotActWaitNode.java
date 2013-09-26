@@ -25,6 +25,9 @@ public class RobotActWaitNode implements RobotActNode {
 
 	@Override
 	public String toString(){
+		if( exp != null){
+			return "wait("+exp+");";
+		}
 		return "wait;";
 	}
 }
